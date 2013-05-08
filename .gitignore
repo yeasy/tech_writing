@@ -130,6 +130,10 @@ Desktop.ini
 *.doc
 *.docx
 
+# ppt file
+*.ppt
+*.pptx
+
 #############
 ## Python
 #############
