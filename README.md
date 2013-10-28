@@ -4,7 +4,7 @@ tech_writing
 Some of my technical writings.
 
 ## SDN ##
-Introduction for OpenFlow, OpenvSwitch, Controller, etc.
+Documents for Software Defined Networking techniques, including OpenFlow, OpenvSwitch, Controller, etc.
 
 
 ## OpenStack ##
