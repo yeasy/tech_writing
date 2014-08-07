@@ -134,6 +134,11 @@ Desktop.ini
 *.ppt
 *.pptx
 
+# Others
+*.dot
+*.png
+*.edx
+
 #############
 ## Python
 #############
