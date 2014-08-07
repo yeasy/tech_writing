@@ -1,0 +1,24 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+    node [shape = record];
+    rpccallback[label="rpc.RpcCallback",color=blue];
+    rpcproxy[label="rpc.RpcProxy",color=red];
+
+    subgraph cluster_plugin{
+        label="Firewall Plugin";
+        callback[label="FirewallCallbacks",color=blue];
+        agentapi[label="FirewallAgentApi",color=red];
+    };
+
+    subgraph cluster_agent{
+        label="Firewall Agent";
+        apimixin[label="FWaaSPluginApiMixin",color=red];
+        callbackmixin[label="FWaaSAgentRpcCallbackMixin"];
+    };
+
+    apimixin->callback[label="set_firewall_status\nfirewall_deleted"];
+    agentapi->callbackmixin[label="create_firewall\nupdate_firewall\ndelete_firewall"];
+
+    //{rank=same; rpccallback callback}
+    //{rank=same; rpcproxy apimixin}
+}

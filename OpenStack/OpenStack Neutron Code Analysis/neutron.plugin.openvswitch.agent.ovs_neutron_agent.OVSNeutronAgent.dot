@@ -1,0 +1,25 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+    node [shape = record];
+
+    rpcproxy[label=<<font color="red">neutron.common.rpc</font>.RpcProxy>];
+
+    pluginapi[label=<<font color="green">neutron.agent.rpc</font>.PluginApi:<br/>get_device_details()<br/>get_devices_details_list()<br/>update_device_down()<br/>update_device_up()<br/>tunnel_sync>];
+    rpcapimixin[label=<<font color="green">neutron.agent.rpc</font>.SecurityGroupServerRpcApiMixin:<br/>security_group_rules_for_devices()>];
+    stateapi[label=<<font color="green">neutron.agent.rpc</font>.PluginReportStateAPI:<br/>report_state()>];
+
+    pluginrpc[label="self.plugin_rpc = OVSPluginApi(topics.PLUGIN)",color=blue];
+    staterpc[label="self.state_rpc = agent_rpc.PluginReportStateAPI(topics.PLUGIN)",color=blue];
+
+    rpcproxy->pluginapi-> pluginrpc;
+    rpcapimixin -> pluginrpc;
+    rpcproxy ->stateapi->staterpc;
+
+    createconnection[label=<<font color="red">neutron.common.rpc.</font>.create_connection()>];
+    createconsumer[label=<<font color="green">neutron.agent.rpc</font>.create_consumers()>];
+    connection[label="self.connection = agent_rpc.create_consumers(self.endpoints,self.topic,consumers)",color=blue];
+
+    createconnection->createconsumer->connection;
+
+    {rank=same; pluginrpc staterpc connection}
+}

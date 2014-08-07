@@ -1,0 +1,27 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+    node [shape = record];
+     plugin[label="OVS Plugin",color=blue];
+     agent[label="OVS Agent",color=red];
+     dhcpagent[label="DHCP Agent",color=red];
+     l3agent[label="L3 Agent",color=red];
+     consumer[label="{Topics|topics.PLUGIN\ltopics.L3PLUGIN}",color=red];
+
+     notifyrpc[label="{AgentNotifierApi|network_delete\lport_update\ltunnel_update\l}",color=blue];
+     dhcpnotifyrpc[label="{DhcpAgentNotifierApi|agent_updated\lnetwork_added_to_agent\lnetwork_removed_from_agent\lnetwork.(CUD).end\lsubnet.(CUD).end\lport.(CUD).end}\l}",color=blue];
+     l3notifyrpc[label="{L3AgentNotifierApi|add_arp_entry\ldel_arp_entry\lagent_updated\lrouter_added_to_agent\lrouter_removed_from_agent\lrouter_deleted\lrouter_updated\l}",color=blue];
+
+     ovspluginapi[label="{OVSPluginApi|get_device_details\lget_devices_details_list\lupdate_device_down\lupdate_device_up\ltunnel_sync\lsecurity_group_rules_for_devices}",color=red];
+     staterpc[label="report_state",color=red];
+
+     plugin->notifyrpc->agent[color=blue,style=dotted];
+     plugin->dhcpnotifyrpc->dhcpagent[color=blue,style=dotted];
+     plugin->l3notifyrpc->l3agent[color=blue,style=dotted];
+
+     agent->ovspluginapi->plugin[color=red,style=dotted];
+     agent->staterpc->plugin[color=red,style=dotted];
+     consumer->plugin[color=red,style=dotted];
+
+    {rank=same; notifyrpc dhcpnotifyrpc l3notifyrpc ovspluginapi staterpc};
+    //{rank=same; rpcproxy apimixin}
+}

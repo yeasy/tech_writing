@@ -1,0 +1,9 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+	node [shape = record];
+	"Web or Client" -> "Neutron Server" [label="REST API Call"];
+	"Neutron Server" -> Plugin [label="WSGI Resource Call"];
+	Plugin -> Agent [dir=both,label="RPC API Call"];
+	Agent -> Driver [label="Local Method Call"]
+
+}

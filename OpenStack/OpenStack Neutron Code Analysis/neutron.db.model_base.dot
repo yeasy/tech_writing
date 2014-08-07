@@ -1,0 +1,7 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+	node [shape = record];
+	"oslo.db.sqlalchemy.models.ModelBase" -> "NeutronBase";
+	"NeutronBase" -> "NeutronBaseV2";
+
+}

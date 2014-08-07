@@ -1,0 +1,29 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+    node [shape = record];
+
+    server[label="neutron-server",color=blue];
+    apiservice[label="service.NeutronApiService",color=blue];
+    wsgiservice[label="service.WsgiService",color=blue];
+    _run_wsgi[
+        label="{service._run_wsgi()|app=common.config.load_paste_app(api-paste.ini)\lwsgi.Server.start(app)}"
+    ];
+    apirouter[
+        label="{api.router.APIRouter}|
+        plugin=manager.NeutronManager.get_plugin()\l
+        ext_mgr = extensions.PluginAwareExtensionManager.get_instance()\l
+        mapper.collection()
+        "
+        ]
+
+    //apimixin->callback[label="set_firewall_status\nfirewall_deleted"];
+    //agentapi->callbackmixin[label="create_firewall\nupdate_firewall\ndelete_firewall"];
+
+
+    server->apiservice;
+    apiservice->wsgiservice[style=dotted];
+    wsgiservice->_run_wsgi->apirouter;
+
+    //{rank=same; rpccallback callback}
+    //{rank=same; rpcproxy apimixin}
+}

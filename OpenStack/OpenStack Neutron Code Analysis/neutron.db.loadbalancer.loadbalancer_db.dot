@@ -1,0 +1,25 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+	node [shape = record];
+	"SessionPersistence"[color=blue]
+	"PoolStatistics"[color=blue]
+	"Vip"[color=blue]
+	"Member"[color=blue]
+	"Pool"[color=blue]
+	"HealthMonitor"[color=blue]
+	"PoolMonitorAssociation"[color=blue]
+	"model_base.BASEV2\n..." -> "SessionPersistence";
+	"model_base.BASEV2\n..." -> "PoolStatistics";
+	"model_base.BASEV2\n..." -> "Vip";
+	"model_base.BASEV2\n..." -> "Member";
+	"model_base.BASEV2\n..." -> "Pool";
+	"model_base.BASEV2\n..." -> "HealthMonitor";
+	"model_base.BASEV2\n..." -> "PoolMonitorAssociation";
+
+	"LoadBalancerPluginDb"[color=blue]
+	"neutron.api.extensions.PluginInterface" -> "neutron.services.service_base.ServicePluginBase" -> "neutron.extension.loadbalancer.LoadBalancePluginBase" -> "LoadBalancerPluginDb"
+	"neutron.db.common_db_mixin.CommonDbMixin" -> "LoadBalancerPluginDb"
+
+    {rank=same; "SessionPersistence" "LoadBalancerPluginDb"}
+
+}

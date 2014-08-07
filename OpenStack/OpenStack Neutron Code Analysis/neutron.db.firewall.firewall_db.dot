@@ -1,0 +1,17 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+	node [shape = record];
+	"FirewallRule"[color=blue]
+	"Firewall"[color=blue]
+	"FirewallPolicy"[color=blue]
+	"model_base.BASEV2\nmodels_v2.HasId\nmodels_v2.HasTenant" -> "FirewallRule";
+	"model_base.BASEV2\nmodels_v2.HasId\nmodels_v2.HasTenant" -> "Firewall";
+	"model_base.BASEV2\nmodels_v2.HasId\nmodels_v2.HasTenant" -> "FirewallPolicy";
+
+	"Firewall_db_mixin"[color=blue]
+	"neutron.api.extensions.PluginInterface" -> "neutron.services.service_base.ServicePluginBase" -> "neutron.extension.firewall.FirewallPluginBase" -> "Firewall_db_mixin"
+	"neutron.db.common_db_mixin.CommonDbMixin" -> "Firewall_db_mixin"
+
+{rank=same; "FirewallPolicy" "Firewall_db_mixin"}
+
+}

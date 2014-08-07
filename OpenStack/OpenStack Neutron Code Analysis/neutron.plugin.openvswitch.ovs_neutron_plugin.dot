@@ -1,0 +1,14 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+    node [shape = record];
+
+    plugin[label="OVS Plugin",color=blue];
+    agent[label="OVS Agent",color=blue];
+    
+    agent -> plugin [shape=box,label=<<font color="red">OVSPluginApi</font>:<br/>get_device_details<br/>get_devices_details_list<br/>update_device_down<br/>update_device_up<br/>tunnel_sync<br/>security_group_rules_for_devices>]
+    //agent -> plugin [shape=box,label="{OVSPluginApi|get_device_details\lget_devices_details_list\lupdate_device_down\lupdate_device_up\ltunnel_sync\lsecurity_group_rules_for_devices}"]
+    agent->plugin[label=<<font color="red">report_state</font>>]
+    plugin->agent[label=<<font color="red">notify:</font><br/>network_delete<br/>port_update<br/>tunnel_update>]
+   
+    //{rank=same; pluginrpc staterpc connection}
+}

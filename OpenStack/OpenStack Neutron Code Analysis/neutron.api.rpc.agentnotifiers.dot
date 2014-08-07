@@ -1,0 +1,11 @@
+//dot -Tpng xx.dot -o xx.png
+digraph G {
+	node [shape = record];
+	"Notify()" -> "_notify_agents()";
+	"_notify_agents()" -> "_schedule_network()";
+	"_notify_agents()" -> "_get_enabled_agents()";
+	"_notify_agents()" -> "_cast_message()";
+	"network_removed_from_agent()" -> "_cast_message()";
+	"network_added_to_agent()" -> "_cast_message()";
+	"agent_updated()" -> "_cast_message()";
+}
